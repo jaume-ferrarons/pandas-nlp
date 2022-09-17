@@ -23,8 +23,8 @@ jobs:
           poetry install
       - name: Lint with flake8
         run: |
-          flake8 .
-          black .
+          poetry run flake8 .
+          poetry run black .
       - name: Test with pytest
         run: |
-          pytest
+          poetry run pytest
