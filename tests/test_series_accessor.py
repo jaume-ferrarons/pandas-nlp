@@ -5,18 +5,30 @@ import pandas_nlp
 
 
 class SeriesAccessorTest(unittest.TestCase):
-    def test_sentences(self):
-        df = pd.DataFrame(
+    @classmethod
+    def setUpClass(cls):
+        cls._df_words = pd.DataFrame(
+            {"id": [1, 2, 3], "text": ["cat", "dog", "violin"]}
+        )
+        cls._df_sentences = pd.DataFrame(
             {"id": [1, 2, 3], "text": ["", "Hello, how are you?", "Code. Sleep. Eat"]}
         )
+
+    def test_sentences(self):
         self.assertListEqual(
-            df.text.nlp.sentences(),
+            self._df_sentences.text.nlp.sentences(),
             [[], ["Hello, how are you?"], ["Code.", "Sleep.", "Eat"]],
         )
 
     def test_embeddings(self):
-        df = pd.DataFrame({"id": [1, 2, 3], "text": ["cat", "dog", "violin"]})
-        embeddings = df.text.nlp.embeddings()
+        embeddings = self._df_words.text.nlp.embeddings()
         self.assertEqual(len(embeddings), 3, "Incorrect number of embeddings returned")
         for embedding in embeddings:
             self.assertEqual(len(embedding), 96)
+
+    def test_nlp_on_not_str(self):
+        with self.assertRaises(TypeError) as info:
+            self._df_words.id.nlp.sentences()
+        self.assertEqual(
+            str(info.exception), "Value 1 is not a string", "Wrong error message"
+        )

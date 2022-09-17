@@ -14,7 +14,8 @@ class NLPAccessor:
     @staticmethod
     def _validate(pd_series: pd.Series):
         for v in pd_series:
-            assert isinstance(v, str), f"Value {v} is not a string"
+            if not isinstance(v, str):
+                raise TypeError(f"Value {v} is not a string")
 
     def sentences(self, model: str = "en_core_web_sm") -> List[List[str]]:
         nlp = self._get_model(model)
@@ -31,12 +32,3 @@ class NLPAccessor:
 
     def clearCache(self):
         self._model_cache = {}
-
-
-if __name__ == "__main__":
-    df = pd.DataFrame(
-        {"id": [1, 2, 3], "text": ["Hello. This is me, i.e., me.", "Hola", "Hallo"]}
-    )
-    print(df)
-    print(df.text.nlp.embeddings())
-    print(df.text.nlp.sentences())
