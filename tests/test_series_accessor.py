@@ -13,6 +13,7 @@ class SeriesAccessorTest(unittest.TestCase):
         cls._df_sentences = pd.DataFrame(
             {"id": [1, 2, 3], "text": ["", "Hello, how are you?", "Code. Sleep. Eat"]}
         )
+        cls._df_empty = pd.DataFrame({"id": [], "text": []})
 
     def test_sentences(self):
         self.assertListEqual(
@@ -20,11 +21,21 @@ class SeriesAccessorTest(unittest.TestCase):
             [[], ["Hello, how are you?"], ["Code.", "Sleep.", "Eat"]],
         )
 
+    def test_sentences_empty(self):
+        self.assertListEqual(
+            self._df_empty.text.nlp.sentences(),
+            [],
+        )
+
     def test_embeddings(self):
-        embeddings = self._df_words.text.nlp.embeddings()
+        embeddings = self._df_words.text.nlp.embedding()
         self.assertEqual(len(embeddings), 3, "Incorrect number of embeddings returned")
         for embedding in embeddings:
             self.assertEqual(len(embedding), 96)
+
+    def test_embeddings_empty(self):
+        embeddings = self._df_empty.text.nlp.embedding()
+        self.assertEqual(len(embeddings), 0, "Incorrect number of embeddings returned")
 
     def test_nlp_on_not_str(self):
         with self.assertRaises(TypeError) as info:

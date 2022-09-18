@@ -1,7 +1,7 @@
 from typing import List
 import pandas as pd
 import spacy
-from thinc.types import Floats1d
+import numpy
 
 
 @pd.api.extensions.register_series_accessor("nlp")
@@ -21,7 +21,7 @@ class NLPAccessor:
         nlp = self._get_model(model)
         return [[sent.text for sent in doc.sents] for doc in nlp.pipe(self._series)]
 
-    def embeddings(self, model: str = "en_core_web_sm") -> List[Floats1d]:
+    def embedding(self, model: str = "en_core_web_sm") -> List[numpy.ndarray]:
         nlp = self._get_model(model)
         return [doc.vector for doc in nlp.pipe(self._series)]
 
