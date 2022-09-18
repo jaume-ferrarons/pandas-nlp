@@ -2,6 +2,9 @@
 
 It's an extension for pandas providing some NLP functionalities for strings.
 
+[![build](https://github.com/jaume-ferrarons/pandas-nlp/actions/workflows/push-event.yml/badge.svg?branch=master)](https://github.com/jaume-ferrarons/pandas-nlp/actions/workflows/push-event.yml)
+[![version](https://img.shields.io/pypi/v/pandas_nlp?logo=pypi&logoColor=white)](https://pypi.org/project/pandas-nlp/)
+
 ## Installation
 
 Install with:
