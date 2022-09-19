@@ -24,5 +24,5 @@ en-core-web-sm = {url = "https://github.com/explosion/spacy-models/releases/down
 coverage = "^6.4.4"
 
 [build-system]
-requires = ["poetry-core>=1.0.0"]
+requires = ["poetry-core>=1.0.0", "pybind11"]
 build-backend = "poetry.core.masonry.api"
