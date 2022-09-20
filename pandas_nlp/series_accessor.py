@@ -59,9 +59,9 @@ class NLPAccessor:
 
     @_renameSeriesResult
     @_handleEmpty
-    def language(self) -> List[str]:
+    def language(self, confidence: bool = False) -> List[str]:
         fasttext = self._get_cli("fasttext")
-        return self._series.map(fasttext.language)
+        return self._series.map(lambda text: fasttext.language(text, confidence))
 
     def _get_model(self, model: str) -> spacy.language.Language:
         if model not in self._model_cache:
@@ -72,6 +72,3 @@ class NLPAccessor:
         if cli_name not in self._cli_cache:
             self._cli_cache[cli_name] = self.CLI_BUILDERS[cli_name]()
         return self._cli_cache[cli_name]
-
-    def clearCache(self):
-        self._model_cache = {}

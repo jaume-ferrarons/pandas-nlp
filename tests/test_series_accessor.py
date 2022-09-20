@@ -62,6 +62,22 @@ class SeriesAccessorTest(unittest.TestCase):
             languages, pd.Series(["en", "es", "ca", "fr", "de"], name="text_language")
         )
 
+    def test_language_confidence(self):
+        languages = self._df_language.text.nlp.language(confidence=True)
+        pt.assert_series_equal(
+            languages,
+            pd.Series(
+                [
+                    {"language": "en", "confidence": 0.8970903158187866},
+                    {"language": "es", "confidence": 0.9820452928543091},
+                    {"language": "ca", "confidence": 0.9998055100440979},
+                    {"language": "fr", "confidence": 0.9997128844261169},
+                    {"language": "de", "confidence": 0.9979948401451111},
+                ],
+                name="text_language",
+            ),
+        )
+
     def test_language_empty(self):
         languages = self._df_empty.text.nlp.language()
         pt.assert_series_equal(
