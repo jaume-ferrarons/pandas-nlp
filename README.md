@@ -44,6 +44,18 @@ df.text.nlp.language()
 4    de
 Name: text_language, dtype: object
 ```
+```python
+df.text.nlp.language(confidence=True).apply(pd.Series)
+```
+**Output**
+```
+  language  confidence
+0       en    0.897090
+1       es    0.982045
+2       ca    0.999806
+3       fr    0.999713
+4       de    0.997995
+```
 
 ### String embedding
 ```python
