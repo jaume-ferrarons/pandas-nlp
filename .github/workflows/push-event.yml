@@ -27,4 +27,6 @@ jobs:
           poetry run black .
       - name: Test with pytest
         run: |
-          poetry run pytest
+          poetry run coverage run -m pytest
+      - name: Upload Coverage to Codecov
+        uses: codecov/codecov-action@v3
