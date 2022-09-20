@@ -4,6 +4,5 @@ __pycache__
 .vscode
 dist
 
-# Test overage files
-.coverage
-htmlcov
+# Test coverage files
+coverage.xml

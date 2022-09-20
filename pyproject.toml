@@ -6,6 +6,8 @@ authors = ["Jaume Ferrarons <jaume.ferrarons@gmail.com>"]
 readme = "README.md"
 homepage = "https://github.com/jaume-ferrarons/pandas-nlp"
 repository = "https://github.com/jaume-ferrarons/pandas-nlp"
+license = "MIT"
+keywords = ["pandas", "nlp", "spacy", "fasttext"]
 
 [tool.poetry.dependencies]
 python = "^3.8"
@@ -21,7 +23,7 @@ pre-commit = "^2.20.0"
 black = "^22.8.0"
 flake8 = "^5.0.4"
 en-core-web-sm = {url = "https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.4.0/en_core_web_sm-3.4.0-py3-none-any.whl"}
-coverage = "^6.4.4"
+pytest-cov = "^3.0.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
