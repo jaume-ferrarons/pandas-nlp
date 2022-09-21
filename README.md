@@ -1,4 +1,4 @@
-# NLP Pandas
+# Pandas NLP
 
 It's an extension for pandas providing some NLP functionalities for strings.
 
@@ -44,6 +44,7 @@ df.text.nlp.language()
 4    de
 Name: text_language, dtype: object
 ```
+with confidence:
 ```python
 df.text.nlp.language(confidence=True).apply(pd.Series)
 ```
@@ -75,7 +76,7 @@ df.text.nlp.embedding()
 Name: text_embedding, dtype: object
 ```
 
-### String embedding
+### Sentence extraction
 ```python
 import pandas as pd
 import pandas_nlp
