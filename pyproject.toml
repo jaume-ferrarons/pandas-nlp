@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pandas-nlp"
-version = "0.4.2"
+version = "0.5.0"
 description = "Pandas extension with NLP functionalities"
 authors = ["Jaume Ferrarons <jaume.ferrarons@gmail.com>"]
 readme = "README.md"
