@@ -27,6 +27,17 @@ class SeriesAccessorTest(unittest.TestCase):
                 ],
             }
         )
+        cls._df_themed = pd.DataFrame(
+            {
+                "id": [0, 1, 2, 3],
+                "text": [
+                    "My computer is broken",
+                    "I went to a piano concert",
+                    "Chocolate is my favourite",
+                    "Mozart played the piano",
+                ],
+            }
+        )
 
     def test_sentences(self):
         pt.assert_series_equal(
@@ -47,7 +58,7 @@ class SeriesAccessorTest(unittest.TestCase):
         embeddings = self._df_words.text.nlp.embedding()
         self.assertEqual(len(embeddings), 3, "Incorrect number of embeddings returned")
         for embedding in embeddings:
-            self.assertEqual(len(embedding), 96)
+            self.assertEqual(len(embedding), 300)
 
     def test_embeddings_empty(self):
         embeddings = self._df_empty.text.nlp.embedding()
@@ -90,4 +101,18 @@ class SeriesAccessorTest(unittest.TestCase):
             self._df_words.id.nlp.sentences()
         self.assertEqual(
             str(info.exception), "Value 1 is not a string", "Wrong error message"
+        )
+
+    def test_closest(self):
+        themes = self._df_themed.text.nlp.closest(["music", "informatics", "food"])
+        pt.assert_series_equal(
+            themes,
+            pd.Series(["informatics", "music", "food", "music"], name="text_closest"),
+        )
+
+    def test_closest_empty(self):
+        themes = self._df_empty.text.nlp.closest(["music", "informatics", "food"])
+        pt.assert_series_equal(
+            themes,
+            pd.Series([], dtype="object", name="text_closest"),
         )

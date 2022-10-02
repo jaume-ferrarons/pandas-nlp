@@ -1,9 +1,8 @@
 from functools import wraps
 from typing import List
 import pandas as pd
-import spacy
 
-from .fasttext_cli import FastTextCli
+from pandas_nlp.model_manager import ModelManager
 
 
 def _renameSeriesResult(func):
@@ -29,13 +28,10 @@ def _handleEmpty(func):
 
 @pd.api.extensions.register_series_accessor("nlp")
 class NLPAccessor:
-    CLI_BUILDERS = {"fasttext": FastTextCli}
-
     def __init__(self, pd_series: pd.Series) -> None:
         self._series = pd_series
         self._validate(pd_series)
-        self._model_cache = {}
-        self._cli_cache = {}
+        self._mm = ModelManager()
 
     @staticmethod
     def _validate(pd_series: pd.Series):
@@ -45,30 +41,31 @@ class NLPAccessor:
 
     @_renameSeriesResult
     @_handleEmpty
-    def sentences(self, model: str = "en_core_web_sm") -> pd.Series:
-        nlp = self._get_model(model)
+    def sentences(self, model: str = "en_core_web_md") -> pd.Series:
         return pd.Series(
-            [[sent.text for sent in doc.sents] for doc in nlp.pipe(self._series)]
+            self._mm.get_sentence_model(model).texts_sentences(self._series)
         )
 
     @_renameSeriesResult
     @_handleEmpty
-    def embedding(self, model: str = "en_core_web_sm") -> pd.Series:
-        nlp = self._get_model(model)
-        return pd.Series([doc.vector for doc in nlp.pipe(self._series)])
+    def embedding(self, model: str = "en_core_web_md") -> pd.Series:
+        return pd.Series(self._mm.get_vector_model(model).texts_vectors(self._series))
 
     @_renameSeriesResult
     @_handleEmpty
-    def language(self, confidence: bool = False) -> List[str]:
-        fasttext = self._get_cli("fasttext")
-        return self._series.map(lambda text: fasttext.language(text, confidence))
+    def closest(self, labels: List[str], model: str = "en_core_web_md") -> pd.Series:
+        return pd.Series(
+            self._mm.get_vector_model(model_name=model).closest(self._series, labels)
+        )
 
-    def _get_model(self, model: str) -> spacy.language.Language:
-        if model not in self._model_cache:
-            self._model_cache[model] = spacy.load(model)
-        return self._model_cache[model]
-
-    def _get_cli(self, cli_name: str):
-        if cli_name not in self._cli_cache:
-            self._cli_cache[cli_name] = self.CLI_BUILDERS[cli_name]()
-        return self._cli_cache[cli_name]
+    @_renameSeriesResult
+    @_handleEmpty
+    def language(
+        self, confidence: bool = False, model: str = "lid.176.ftz"
+    ) -> List[str]:
+        languages = self._mm.get_language_model(model).languages(self._series)
+        result = [
+            {"language": entry[0], "confidence": entry[1]} if confidence else entry[0]
+            for entry in languages
+        ]
+        return pd.Series(result)

@@ -6,15 +6,20 @@ It's an extension for pandas providing some NLP functionalities for strings.
 [![version](https://img.shields.io/pypi/v/pandas_nlp?logo=pypi&logoColor=white)](https://pypi.org/project/pandas-nlp/)
 [![codecov](https://codecov.io/gh/jaume-ferrarons/pandas-nlp/branch/master/graph/badge.svg?token=UQUSYGANFQ)](https://codecov.io/gh/jaume-ferrarons/pandas-nlp)
 [![pyversion-button](https://img.shields.io/pypi/pyversions/pandas_nlp.svg)](https://pypi.org/project/pandas-nlp/)
-## Installation
+## Setup
+### Requirements 
+- python >= 3.8
 
-Install with:
+### Installation
+Execute:
 ```bash
 pip install -U pandas-nlp
 ```
+To install the default spacy English model:
+```bash
+spacy install en_core_web_md
+```
 
-### Requirements 
-- python >= 3.8
 
 ## Key features
 
@@ -70,10 +75,36 @@ df.text.nlp.embedding()
 ```
 **Output**
 ```
-0    [2.0860276, 0.78038394, 0.20159146, -1.2828196...
-1    [0.96052396, 1.0350337, 0.11549556, -1.2252672...
-2    [1.2934866, 0.10021937, 0.71453714, -1.3288003...
+0    [3.7032, 4.1982, -5.0002, -11.322, 0.031702, -...
+1    [1.233, 4.2963, -7.9738, -10.121, 1.8207, 1.40...
+2    [-1.4708, -0.73871, 0.49911, -2.1762, 0.56754,...
 Name: text_embedding, dtype: object
+```
+
+### Closest concept
+```python
+import pandas as pd
+import pandas_nlp
+
+themed = pd.DataFrame({
+    "id": [0, 1, 2, 3],
+    "text": [
+        "My computer is broken",
+        "I went to a piano concert",
+        "Chocolate is my favourite",
+        "Mozart played the piano"
+    ]
+})
+
+themed.text.nlp.closest(["music", "informatics", "food"])
+```
+**Output**
+```
+0    informatics
+1          music
+2           food
+3          music
+Name: text_closest, dtype: object
 ```
 
 ### Sentence extraction

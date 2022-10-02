@@ -3,7 +3,9 @@ __pycache__
 .pytest_cache
 .vscode
 dist
+.DS_Store
 
 # Test coverage files
 coverage.xml
 .coverage
+htmlcov
