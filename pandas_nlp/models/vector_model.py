@@ -5,10 +5,10 @@ import numpy as np
 
 class VectorModel(ABC):
     @abstractmethod
-    def text_vector(self, text: str) -> np.array:
+    def text_vector(self, text: str) -> np.ndarray:
         """Returns the embedding of the provided text"""
 
-    def texts_vectors(self, texts: List[str]) -> List[np.array]:
+    def texts_vectors(self, texts: List[str]) -> List[np.ndarray]:
         return [self.text_vector(t) for t in texts]
 
     def closest(self, texts: List[str], labels: List[str]) -> List[str]:

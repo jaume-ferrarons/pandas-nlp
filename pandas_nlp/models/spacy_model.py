@@ -11,13 +11,13 @@ class SpacyModel(VectorModel, SentenceModel):
         super().__init__()
         self._model = spacy.load(model_name)
 
-    def text_vector(self, text: str) -> np.array:
+    def text_vector(self, text: str) -> np.ndarray:
         """Returns the embedding of the provided text"""
         doc = self._model(text)
-        return doc.vector
+        return np.array(doc.vector)
 
-    def texts_vectors(self, texts: List[str]) -> List[np.array]:
-        return [doc.vector for doc in self._model.pipe(texts)]
+    def texts_vectors(self, texts: List[str]) -> List[np.ndarray]:
+        return [np.array(doc.vector) for doc in self._model.pipe(texts)]
 
     def text_sentences(self, text: str) -> List[str]:
         doc = self._model(text)

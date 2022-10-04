@@ -4,6 +4,8 @@ from pandas_nlp.models.spacy_model import SpacyModel
 
 
 class SpacyModelTest(unittest.TestCase):
+    _model: SpacyModel
+
     @classmethod
     def setUpClass(cls) -> None:
         cls._model = SpacyModel("en_core_web_md")

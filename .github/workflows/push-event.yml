@@ -25,6 +25,9 @@ jobs:
         run: |
           poetry run flake8 .
           poetry run black .
+      - name: mypy
+        run: |
+          poetry run mypy .
       - name: Test with pytest
         run: |
           poetry run python -m pytest --cov=pandas_nlp --cov-report=xml

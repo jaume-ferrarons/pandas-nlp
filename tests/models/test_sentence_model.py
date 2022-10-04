@@ -10,6 +10,8 @@ class DummySentenceModel(SentenceModel):
 
 
 class SentenceModelTest(unittest.TestCase):
+    _model: DummySentenceModel
+
     @classmethod
     def setUpClass(cls) -> None:
         cls._model = DummySentenceModel()

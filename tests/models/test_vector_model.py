@@ -6,11 +6,13 @@ from pandas_nlp.models.vector_model import VectorModel
 
 
 class DummyVectorModel(VectorModel):
-    def text_vector(self, text: str) -> np.array:
+    def text_vector(self, text: str) -> np.ndarray:
         return np.array([len(text), -len(text)])
 
 
 class SentenceModelTest(unittest.TestCase):
+    _model: DummyVectorModel
+
     @classmethod
     def setUpClass(cls) -> None:
         cls._model = DummyVectorModel()
