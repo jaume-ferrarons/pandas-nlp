@@ -1,6 +1,7 @@
 import unittest
 
 from pandas_nlp.models.spacy_model import SpacyModel
+from tests.utils import register_pandas_nlp_if_not_available
 
 
 class SpacyModelTest(unittest.TestCase):
@@ -8,6 +9,7 @@ class SpacyModelTest(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls) -> None:
+        register_pandas_nlp_if_not_available()
         cls._model = SpacyModel("en_core_web_md")
 
     def test_vector(self):

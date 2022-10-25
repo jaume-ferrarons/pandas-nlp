@@ -2,6 +2,7 @@ from typing import List
 import unittest
 
 from pandas_nlp.models.sentence_model import SentenceModel
+from tests.utils import register_pandas_nlp_if_not_available
 
 
 class DummySentenceModel(SentenceModel):
@@ -14,6 +15,7 @@ class SentenceModelTest(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls) -> None:
+        register_pandas_nlp_if_not_available()
         cls._model = DummySentenceModel()
 
     def test_texts_sentences(self):

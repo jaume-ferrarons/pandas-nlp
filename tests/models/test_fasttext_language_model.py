@@ -1,11 +1,13 @@
 import unittest
 
 from pandas_nlp.models.fasttext_language_model import FastTextLanguageModel
+from tests.utils import register_pandas_nlp_if_not_available
 
 
 class FastTextLanguageModelTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
+        register_pandas_nlp_if_not_available()
         cls._texts = [
             "I like cats",
             "Me gustan los gatos",

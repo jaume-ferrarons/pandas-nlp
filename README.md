@@ -28,6 +28,8 @@ spacy install en_core_web_md
 import pandas as pd
 import pandas_nlp
 
+pandas_nlp.register()
+
 df = pd.DataFrame({
     "id": [1, 2, 3, 4, 5],
     "text": [
@@ -68,6 +70,8 @@ df.text.nlp.language(confidence=True).apply(pd.Series)
 import pandas as pd
 import pandas_nlp
 
+pandas_nlp.register()
+
 df = pd.DataFrame(
     {"id": [1, 2, 3], "text": ["cat", "dog", "violin"]}
 )
@@ -85,6 +89,8 @@ Name: text_embedding, dtype: object
 ```python
 import pandas as pd
 import pandas_nlp
+
+pandas_nlp.register()
 
 themed = pd.DataFrame({
     "id": [0, 1, 2, 3],
@@ -111,6 +117,8 @@ Name: text_closest, dtype: object
 ```python
 import pandas as pd
 import pandas_nlp
+
+pandas_nlp.register()
 
 df = pd.DataFrame(
     {"id": [0, 1], "text": ["Hello, how are you?", "Code. Sleep. Eat"]}

@@ -2,12 +2,14 @@ import unittest
 import pandas as pd
 import pandas.testing as pt
 
-import pandas_nlp
+from tests.utils import register_pandas_nlp_if_not_available
 
 
 class SeriesAccessorTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
+        register_pandas_nlp_if_not_available()
+
         cls._df_words = pd.DataFrame(
             {"id": [1, 2, 3], "text": ["cat", "dog", "violin"]}
         )

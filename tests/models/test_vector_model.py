@@ -3,6 +3,7 @@ import unittest
 import numpy as np
 
 from pandas_nlp.models.vector_model import VectorModel
+from tests.utils import register_pandas_nlp_if_not_available
 
 
 class DummyVectorModel(VectorModel):
@@ -15,6 +16,7 @@ class SentenceModelTest(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls) -> None:
+        register_pandas_nlp_if_not_available()
         cls._model = DummyVectorModel()
 
     def test_texts_vectors(self):

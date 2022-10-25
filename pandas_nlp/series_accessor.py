@@ -1,6 +1,7 @@
 from functools import wraps
 from typing import List
 import pandas as pd
+from pandas.api.extensions import register_series_accessor
 
 from pandas_nlp.model_manager import ModelManager
 
@@ -26,7 +27,11 @@ def _handleEmpty(func):
     return handler
 
 
-@pd.api.extensions.register_series_accessor("nlp")
+def register():
+    """Registers pandas_nlp `nlp` accessor for pandas series"""
+    register_series_accessor("nlp")(NLPAccessor)
+
+
 class NLPAccessor:
     def __init__(self, pd_series: pd.Series) -> None:
         self._series = pd_series
